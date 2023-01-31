@@ -1,24 +1,52 @@
-function SignUp() {
-    return (
-        <>
-            <div className="container w-50 m-auto mt-5">
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-                <form class="row g-3 card p-3">
+const Login = () => {
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (username === "admin" && password === "admin") {
+            navigate("/dashboard");
+        } else {
+            window.alert("You are not admin!!")
+            // navigate("/signIn");
+        }
+    };
+
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <div className="card w-50 m-auto p-3 mt-3">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter username" required />
+                        <input
+                            type="text"
+                            class="form-control"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            id="username"
+                            placeholder="Enter username..."
+                        />
                     </div>
                     <div class="mb-3">
-                        <label for="password" class="form-label">Another label</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter password" required />
+                        <label for="password" class="form-label">Password</label>
+                        <input
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            placeholder="Enter password"
+                        />
                     </div>
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-primary">Sign in</button>
-                    </div>
-                </form>
-            </div>
-        </>
+                    <button className="btn btn-outline-primary" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
     );
-}
+};
 
-export default SignUp;
+export default Login;
