@@ -1,6 +1,16 @@
 import { Link } from "react-router-dom";
 
 function Navbar() {
+    const handleLogout = () => {
+        try {
+            localStorage.removeItem("admin");
+            window.alert("❗ Logged out.");
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    const admin = localStorage.getItem("admin");
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -15,9 +25,19 @@ function Navbar() {
                             <li className="nav-item">
                                 <Link to="/about" className="nav-link active">About</Link>
                             </li>
-                            <li className="nav-item">
-                                <Link className="nav-link active" to="/signIn">Sign In</Link>
-                            </li>
+                            {admin ?
+                                (<li className="nav-item">
+                                    <Link onClick={handleLogout} className="nav-link active" to="/signIn">Sign Out</Link>
+                                </li>)
+                                : (
+                                    <li className="nav-item">
+                                        <div className="nav-link active" style={{ cursor: "pointer" }}>Sign In</div>
+                                    </li>
+                                )
+                            }
+                            {/* <li className="nav-item">
+                                <div onClick={handleLogout} className="nav-link active" style={{ cursor: "pointer" }}>Sign Out</div>
+                            </li> */}
                         </ul>
                         <form className="d-flex">
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
